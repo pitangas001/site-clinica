@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clínica Sorriso Real — Painel</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Sorriso.css">
+</head>
+<body>
+  <!-- Loading -->
+  <div id="loading" class="loading" aria-hidden="false">
+    <div class="loader">
+      <div class="logo-sr">SR</div>
+      <div>
+        <div class="title">Carregando — Clínica Sorriso Real</div>
+        <div class="muted">O toque de realeza que o seu sorriso merece.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Navegação">
+      <div class="brand">
+        <div class="logo">SR</div>
+        <div class="brand-info">
+          <h1 id="clinicDisplayName">Clínica Sorriso Real</h1>
+          <small id="clinicDisplayTag" class="muted">O toque de realeza que o seu sorriso merece.</small>
+        </div>
+        <button id="menuClose" class="icon-btn hide-desktop" aria-label="Fechar menu">✕</button>
+      </div>
+
+      <nav class="menu">
+        <button class="menu-btn active" data-target="dashboard">🏠 <span>Dashboard</span></button>
+        <button class="menu-btn" data-target="atendimentos">💬 <span>Atendimentos</span></button>
+        <button class="menu-btn" data-target="pacientes">🧑‍⚕️ <span>Pacientes</span></button>
+        <button class="menu-btn" data-target="consultas">📅 <span>Consultas</span></button>
+        <button class="menu-btn" data-target="config">⚙️ <span>Configurações</span></button>
+        <button class="menu-btn" data-target="sobre">ℹ️ <span>Sobre</span></button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="exportBtn" class="btn ghost">Exportar JSON</button>
+        <label class="btn file">Importar<input id="importFile" type="file" accept=".json" hidden></label>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar">
+        <div class="left">
+          <button id="menuOpen" class="icon-btn show-desktop" aria-label="Abrir menu">☰</button>
+          <div>
+            <strong id="page-title">Dashboard</strong>
+            <small id="page-sub" class="muted">Visão geral</small>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button id="newPatientBtn" class="btn primary">+ Novo Paciente</button>
+          <button id="newApptBtn" class="btn">+ Nova Consulta</button>
+        </div>
+      </header>
+
+      <!-- VIEWS -->
+      <section id="dashboard" class="view active">
+        <div class="grid stats">
+          <div class="card stat">
+            <h4>Pacientes</h4>
+            <div id="stat-patients" class="big">0</div>
+          </div>
+          <div class="card stat">
+            <h4>Próximas</h4>
+            <div id="stat-consults" class="big">0</div>
+          </div>
+          <div class="card stat">
+            <h4>Atendimentos</h4>
+            <div id="stat-waiting" class="big">0</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Agenda rápida</h3>
+          <div id="recentList" class="list"></div>
+        </div>
+      </section>
+
+      <section id="atendimentos" class="view">
+        <div class="card">
+          <h3>Atendimentos</h3>
+          <p class="muted">Inicie e conclua atendimentos.</p>
+          <div class="controls">
+            <select id="att-patient-select" aria-label="Selecionar paciente"></select>
+            <button id="start-att" class="btn primary">Iniciar</button>
+            <button id="finish-att" class="btn" disabled>Concluir</button>
+          </div>
+          <div id="att-list" class="list" style="margin-top:12px"></div>
+        </div>
+      </section>
+
+      <section id="pacientes" class="view">
+        <div class="card">
+          <div class="card-row">
+            <h3>Pacientes</h3>
+            <input id="searchPatient" placeholder="Buscar por nome..." aria-label="Buscar paciente">
+          </div>
+          <div id="patientList" class="list"></div>
+        </div>
+      </section>
+
+      <section id="consultas" class="view">
+        <div class="card">
+          <h3>Consultas</h3>
+          <div class="controls">
+            <input id="filterName" placeholder="Filtrar paciente..." aria-label="Filtrar paciente">
+            <select id="filterService">
+              <option value="">Todos</option>
+              <option>Consulta</option>
+              <option>Limpeza</option>
+              <option>Canal</option>
+              <option>Restauração</option>
+              <option>Clareamento</option>
+              <option>Extração</option>
+            </select>
+            <button id="clearFilters" class="btn">Limpar</button>
+          </div>
+          <div id="apptList" class="list" style="margin-top:12px"></div>
+        </div>
+      </section>
+
+      <section id="config" class="view">
+        <div class="card">
+          <h3>Configurações</h3>
+          <label>Nome da clínica</label>
+          <input id="clinicName" placeholder="Clínica Sorriso Real">
+          <label>Slogan</label>
+          <input id="clinicTag" placeholder="O toque de realeza que o seu sorriso merece.">
+          <div style="margin-top:12px">
+            <button id="saveClinic" class="btn primary">Salvar</button>
+            <button id="resetDB" class="btn ghost">Limpar todos os dados</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="sobre" class="view">
+        <div class="card">
+          <h3>Sobre</h3>
+          <p>A Clínica Sorriso Real oferece atendimento odontológico moderno e humanizado.</p>
+          <p class="muted">Contato: (11) 9xxxx-xxxx — contato@sorrisoreal.com</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true">
+      <button id="modalClose" class="modal-close" aria-label="Fechar">✕</button>
+      <div id="modalContent">
+        <!-- Formulário da consulta com o novo campo Procedimento -->
+        <form id="consultForm">
+          <label>Paciente</label>
+          <select id="patientSelect">
+            <option>Selecione...</option>
+          </select>
+
+          <label>Procedimento</label>
+          <select id="procedureSelect">
+            <option>Consulta</option>
+            <option>Limpeza</option>
+            <option>Canal</option>
+            <option>Restauração</option>
+            <option>Clareamento</option>
+            <option>Extração</option>
+          </select>
+
+          <label>Data</label>
+          <input type="date" id="consultDate">
+
+          <label>Observações</label>
+          <textarea id="consultNotes" placeholder="Observações adicionais..."></textarea>
+
+          <div style="margin-top:12px; display:flex; justify-content:flex-end; gap:8px">
+            <button type="button" class="btn">Cancelar</button>
+            <button type="submit" class="btn primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="sorriso.js"></script>
+</body>
+</html>
